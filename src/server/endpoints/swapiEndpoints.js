@@ -1,5 +1,4 @@
-
-
+const {swapiService} = require('../services')
 const applySwapiEndpoints = (server, app) => {
 
     server.get('/hfswapi/test', async (req, res) => {
@@ -8,15 +7,35 @@ const applySwapiEndpoints = (server, app) => {
     });
 
     server.get('/hfswapi/getPeople/:id', async (req, res) => {
-        res.sendStatus(501);
+
+        try {
+            let people = await swapiService.getPeople(req.params.id, app);
+            res.send(people);
+        } catch (error) {
+            res.send(error);
+        }
+
     });
 
     server.get('/hfswapi/getPlanet/:id', async (req, res) => {
-        res.sendStatus(501);
+
+        try {
+            let planet = await swapiService.getPlanet(req.params.id, app);
+            res.send(planet);
+        } catch (error) {
+            res.send(error) 
+        }
+
     });
 
     server.get('/hfswapi/getWeightOnPlanetRandom', async (req, res) => {
-        res.sendStatus(501);
+        try {
+            let WeightOnPlanet = await swapiService.getRandomWeightOnPlanet(req.params.id, app);
+            res.json(WeightOnPlanet);
+        } catch (error) {
+            res.status(error.status);
+            res.send(error.message);
+        }
     });
 
     server.get('/hfswapi/getLogs',async (req, res) => {

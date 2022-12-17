@@ -12,9 +12,12 @@ const genericRequest = async (url, method, body, logging = false) => {
         options.body = body;
     }
     const response = await fetch(url, options);
+
+    if (response.status == 404) throw 404
+
     const data = await response.json();
     if(logging){
-        console.log(data);
+        // console.log(data);
     }
     return data;
 }
